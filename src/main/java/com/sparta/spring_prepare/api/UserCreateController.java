@@ -1,6 +1,6 @@
 package com.sparta.spring_prepare.api;
 
-import com.sparta.spring_prepare.Service.UserService;
+import com.sparta.spring_prepare.Service.SecirotuService;
 import com.sparta.spring_prepare.dto.UserCreateForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserCreateController {
 
-    private final UserService userService;
+    private final SecirotuService userService;
 
     @GetMapping("/signup")
     public String signup(UserCreateForm userCreateForm) {
