@@ -35,7 +35,8 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator:6.0.13.Final' // 적절한 버전으로 수정
 	implementation 'javax.validation:validation-api:2.0.1.Final' // 적절한 버전으로 수정
 	implementation 'org.glassfish:javax.el:3.0.0'
-	runtimeOnly 'com.h2database:h2'
+	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 }
 
 
