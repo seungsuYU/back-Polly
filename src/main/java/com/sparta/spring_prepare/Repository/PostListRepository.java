@@ -11,7 +11,5 @@ import java.util.List;
 public interface PostListRepository extends JpaRepository<PostList, Long> {
     List<PostList> findByTitle(String title);
 
-    private final JdbcTemplate jdbctemplate;
 
-    }
 }
