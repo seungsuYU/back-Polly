@@ -26,6 +26,11 @@ public class PostList {
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
 
+    public PostList(Long id, String title, String content, String author) {
+        this(id, title, content, author, LocalDateTime.now(), LocalDateTime.now());
+    }
+
+
     @PrePersist
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
@@ -34,5 +39,12 @@ public class PostList {
     @PreUpdate
     public void preUpdate() {
         this.updateDate = LocalDateTime.now();
+    }
+
+    public void patch(PostList postList) {
+        if (postList.title != null)
+            this.title = postList.title;
+        if (postList.content != null)
+            this.content = postList.content;
     }
 }

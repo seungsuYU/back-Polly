@@ -54,17 +54,18 @@ public class testlist {
     public void updatePostTest() {
         // given
         PostList post = new PostList();
-        post.setTitle("초기 제목");
-        post.setContent("초기 내용");
-        post.setAuthor("작성자1");
+        post.setTitle("수정 전 제목");
+        post.setContent("수정 전 내용");
+        post.setAuthor("수정 전");
         postListRepository.save(post);
 
         // when
-        post.setTitle("수정된 제목");
+        post.setTitle("수정 후 제목");
+        post.setContent("수정 진행중");
         PostList updatedPost = postListRepository.save(post);
 
         // then
-        assertThat(updatedPost.getTitle()).isEqualTo("수정된 제목");
+        assertThat(updatedPost.getTitle()).isEqualTo("수정 후 제목");
     }
 
     @Test
