@@ -1,6 +1,6 @@
 package com.sparta.spring_prepare.api;
 
-import com.sparta.spring_prepare.Service.SecirotuService;
+import com.sparta.spring_prepare.Service.SecurityService;
 import com.sparta.spring_prepare.dto.UserCreateForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserCreateController {
 
-    private final SecirotuService userService;
+    private final SecurityService userService;
 
     @GetMapping("/signup")
     public String signup(UserCreateForm userCreateForm) {
@@ -40,4 +40,9 @@ public class UserCreateController {
 
         return "redirect:/";
     }
+    @GetMapping("/login")
+    public String login() {
+        return "login_form";
+    }
+
 }

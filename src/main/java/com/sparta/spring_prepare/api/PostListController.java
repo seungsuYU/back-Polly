@@ -17,29 +17,38 @@ public class PostListController {
     @Autowired
     private PostListService postListService;
 
+    // 전체 게시물 조회
     @GetMapping
     public List<PostList> getAllPosts() {
         return postListService.findAll();
     }
 
+    // 특정 게시물 조회
     @GetMapping("/{id}")
     public Optional<PostList> getPostById(@PathVariable Long id) {
         return postListService.findById(id);
     }
 
-    @PutMapping("/{id}")
-    public PostList updatePost(@PathVariable Long id,
-                               @RequestBody PostList postDetatils) {
-        PostList postList = postListService.findById(id).orElseThrow();
-        postList.setTitle(postDetatils.getTitle());
-        postList.setContent(postList.getContent());
-        postList.setWriter(postList.getWriter());
-        return postListService.save(postList);
+    // 게시물 생성
+    @PostMapping
+    public PostList createPost(@RequestBody PostList post) {
+        return postListService.save(post);
     }
 
+    // 게시물 수정
+    @PutMapping("/{id}")
+    public PostList updatePost(@PathVariable Long id, @RequestBody PostList postDetails) {
+        PostList post = postListService.findById(id).orElseThrow();
+        post.setTitle(postDetails.getTitle());
+        post.setContent(postDetails.getContent());
+        post.setAuthor(postDetails.getAuthor());
+        return postListService.save(post);
+    }
+
+    // 게시물 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
-        postListService.delete(id);
-        return ResponseEntity.noContent().build();
+        postListService.deleteById(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 }

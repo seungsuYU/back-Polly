@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class SecirotuService {
+public class SecurityService {
 
     private final UserCreateRepository signUpRepository;
     private final PasswordEncoder passwordEncoder;

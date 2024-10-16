@@ -37,6 +37,8 @@ dependencies {
 	implementation 'org.glassfish:javax.el:3.0.0'
 	implementation 'mysql:mysql-connector-java:8.0.28'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	testImplementation 'org.mockito:mockito-core:5.4.0' // 적절한 버전으로 수정
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 

@@ -18,9 +18,11 @@ public class PostList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String title;
     private String content;
-    private String writer;
+    private String author;
+
     private LocalDateTime createdDate;
     private LocalDateTime updateDate;
 
@@ -28,10 +30,9 @@ public class PostList {
     public void prePersist() {
         this.createdDate = LocalDateTime.now();
     }
+
     @PreUpdate
     public void preUpdate() {
         this.updateDate = LocalDateTime.now();
     }
-
-
 }

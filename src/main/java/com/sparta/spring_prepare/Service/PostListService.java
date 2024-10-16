@@ -18,15 +18,15 @@ public class PostListService {
         return postListRepository.findAll();
     }
 
-    public Optional<PostList> findById (Long id) {
+    public Optional<PostList> findById(Long id) {
         return postListRepository.findById(id);
     }
 
-    public PostList save(PostList postList) {
-        return postListRepository.save(postList);
+    public PostList save(PostList post) {
+        return postListRepository.save(post);
     }
 
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         postListRepository.deleteById(id);
     }
 }
