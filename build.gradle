@@ -37,6 +37,7 @@ repositories {
 	mavenCentral()
 }
 
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
@@ -46,14 +47,23 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-	implementation 'org.hibernate.validator:hibernate-validator:6.0.13.Final' // 적절한 버전으로 수정
-	implementation 'javax.validation:validation-api:2.0.1.Final' // 적절한 버전으로 수정
-	implementation 'org.glassfish:javax.el:3.0.0'
+
+	// Hibernate Validator와 Validation API의 버전을 적절히 수정
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.0' // 유효성 검사 API
+	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final' // 유효성 검사기
+	implementation 'org.glassfish:jakarta.el:3.0.0' // EL API (필요한 경우)
+
 	implementation 'mysql:mysql-connector-java:8.0.28'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	testImplementation 'org.mockito:mockito-core:5.4.0' // 적절한 버전으로 수정
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework:spring-core:6.0.0' // Spring Framework 6.x로 수정
+
+	// JWT
+	compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 }
+
 
 
 tasks.named('test') {
@@ -62,4 +72,7 @@ tasks.named('test') {
 
 tasks.withType(JavaCompile) {
 	options.compilerArgs += ['-parameters']
+}
+jar {
+	enabled=false
 }

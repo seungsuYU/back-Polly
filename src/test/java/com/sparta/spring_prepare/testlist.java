@@ -21,16 +21,16 @@ public class testlist {
     public void createPostTest() {
         // given
         PostList post = new PostList();
-        post.setTitle("가가");
-        post.setContent("가가");
-        post.setAuthor("아아");
+        post.setTitle("다섯번째");
+        post.setContent("나");
+        post.setAuthor("나");
 
         // when
         PostList savedPost = postListRepository.save(post);
 
         // then
         assertThat(savedPost.getId()).isNotNull();
-        assertThat(savedPost.getTitle()).isEqualTo("가가");
+        assertThat(savedPost.getTitle()).isEqualTo("다섯번째");
     }
 
     @Test

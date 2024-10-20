@@ -20,20 +20,20 @@ public class PostListController {
     private PostListService postListService;
 
     // 전체 게시물 조회
-    @GetMapping("/list/All")
+    @GetMapping("/list")
     public List<PostList> index() {
         return postListService.index();
     }
 
     // 특정 게시물 조회
-    @GetMapping("/list/{id}")
+    @GetMapping("/{id}")
     public PostList show(@PathVariable Long id) {
         log.info("controlleraa");
         return postListService.show(id);
     }
 
     // 게시물 생성
-    @PostMapping("/list/create")
+    @PostMapping("/create")
     public ResponseEntity<PostList> create(@RequestBody PostListForm dto) {
         PostList created = postListService.create(dto);
         return (created != null) ?
@@ -42,7 +42,7 @@ public class PostListController {
     }
 
     // 게시물 수정
-    @PutMapping("/list/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<PostList> update(@PathVariable("id") Long id,
                            @RequestBody PostListForm dto) {
         PostList updated = postListService.update(id,dto);

@@ -11,6 +11,7 @@ public class PostListForm {
     private String content;
     private String author;
 
+
     public PostList toEntity() {
         return new PostList(id, title, content, author);
     }
