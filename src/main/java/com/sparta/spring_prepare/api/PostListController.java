@@ -37,17 +37,17 @@ public class PostListController {
     public ResponseEntity<PostList> create(@RequestBody PostListForm dto) {
         PostList created = postListService.create(dto);
         return (created != null) ?
-        ResponseEntity.status(HttpStatus.OK).body(created) :
-        ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+                ResponseEntity.status(HttpStatus.OK).body(created) :
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     // 게시물 수정
     @PutMapping("/{id}")
     public ResponseEntity<PostList> update(@PathVariable("id") Long id,
-                           @RequestBody PostListForm dto) {
-        PostList updated = postListService.update(id,dto);
+                                           @RequestBody PostListForm dto) {
+        PostList updated = postListService.update(id, dto);
         return (updated != null) ?
-                ResponseEntity.status(HttpStatus.OK).body(updated):
+                ResponseEntity.status(HttpStatus.OK).body(updated) :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
