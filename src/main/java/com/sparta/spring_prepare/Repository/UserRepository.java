@@ -1,11 +1,7 @@
 package com.sparta.spring_prepare.Repository;
 
-import com.sparta.spring_prepare.Entity.User;
+import com.sparta.spring_prepare.Entity.SiteUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
-
-public interface UserRepository extends JpaRepository <User, Long>{
-    Optional<User> findByUsername(String username);
-    Optional<User> findByEmail(String email);
+public interface UserRepository extends JpaRepository<SiteUser, Long> {
 }

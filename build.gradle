@@ -39,30 +39,25 @@ repositories {
 
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 
-	// Hibernate Validator와 Validation API의 버전을 적절히 수정
-	implementation 'jakarta.validation:jakarta.validation-api:3.0.0' // 유효성 검사 API
-	implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final' // 유효성 검사기
-	implementation 'org.glassfish:jakarta.el:3.0.0' // EL API (필요한 경우)
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
 
-	implementation 'mysql:mysql-connector-java:8.0.28'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	testImplementation 'org.mockito:mockito-core:5.4.0' // 적절한 버전으로 수정
-	implementation 'org.springframework:spring-core:6.0.0' // Spring Framework 6.x로 수정
-
-	// JWT
-	compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
-	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
 }
+
 
 
 

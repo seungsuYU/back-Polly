@@ -1,66 +1,53 @@
 package com.sparta.spring_prepare.api;
 
-import com.sparta.spring_prepare.Repository.UserDetailsImpl;
 import com.sparta.spring_prepare.Service.UserService;
-import com.sparta.spring_prepare.UserRole.UserRoleEnum;
-import com.sparta.spring_prepare.dto.SignupRequestDto;
-import com.sparta.spring_prepare.dto.UserInfoDto;
+import com.sparta.spring_prepare.dto.UserCreateForm;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
-
-@Slf4j
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/user/login-page")
-    public String loginPage() {
-        return "login";
+    @GetMapping("/signup")
+    public String signup(UserCreateForm userCreateForm) {
+        return "signup_form";
     }
 
-    @GetMapping("/user/signup")
-    public String signupPage() {
-        return "signup";
-    }
-
-    @PostMapping("/user/signup")
-    public String signup(@Valid SignupRequestDto requestDto, BindingResult bindingResult) {
-        // Validation 예외처리
-        List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-        if(fieldErrors.size() > 0) {
-            for (FieldError fieldError : bindingResult.getFieldErrors()) {
-                log.error(fieldError.getField() + " 필드 : " + fieldError.getDefaultMessage());
-            }
-            return "redirect:/api/user/signup";
+    @PostMapping("/signup")
+    public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "signup_form";
         }
 
-        userService.signup(requestDto);
+        if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
+            bindingResult.rejectValue("password2", "passwordInCorrect",
+                    "2개의 패스워드가 일치하지 않습니다.");
+            return "signup_form";
+        }
 
-        return "redirect:/api/user/login-page";
-    }
+        try {
+            userService.create(userCreateForm.getUsername(),
+                    userCreateForm.getEmail(), userCreateForm.getPassword1());
+        }catch(DataIntegrityViolationException e) {
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+            return "signup_form";
+        }catch(Exception e) {
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", e.getMessage());
+            return "signup_form";
+        }
 
-    // 회원 관련 정보 받기
-    @GetMapping("/user-info")
-    @ResponseBody
-    public UserInfoDto getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        String username = userDetails.getUser().getUsername();
-        UserRoleEnum role = userDetails.getUser().getRole();
-        boolean isAdmin = (role == UserRoleEnum.ADMIN);
-
-        return new UserInfoDto(username, isAdmin);
+        return "redirect:/";
     }
 }
