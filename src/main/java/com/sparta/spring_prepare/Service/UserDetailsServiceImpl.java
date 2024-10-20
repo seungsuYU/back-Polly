@@ -22,6 +22,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
         }
+
+        // 디버깅 정보 추가
+        System.out.println("로드된 사용자: " + user.getUsername());
+        System.out.println("해시 비밀번호: " + user.getPassword());
+
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "your_secret_key"; // 적절한 시크릿 키로 교체하세요
+    private final String SECRET_KEY = "mysecretkey123!@#456$%^&789*()abcDEFghIJKLmnoPQRstuVWXyz\n"; // 적절한 시크릿 키로 교체하세요
 
     public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();

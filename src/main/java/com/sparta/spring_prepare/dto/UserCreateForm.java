@@ -13,10 +13,10 @@ public class UserCreateForm {
 
     @NotEmpty(message = "비밀번호는 필수항목입니다.")
     @Size(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
-    private String password1;
+    private String password;
 
     @NotEmpty(message = "비밀번호 확인은 필수항목입니다.")
-    private String password2;
+    private String password1;
 
     @NotEmpty(message = "이메일은 필수항목입니다.")
     @Email(message = "유효한 이메일 형식이 아닙니다.")
