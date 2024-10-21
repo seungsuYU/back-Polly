@@ -14,16 +14,18 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder; // PasswordEncoder 주입
+    private PasswordEncoder passwordEncoder;
 
     // 회원가입 메소드
     public SiteUser register(UserCreateForm userCreateForm) {
         SiteUser user = new SiteUser();
         user.setUsername(userCreateForm.getUsername());
-        user.setPassword(passwordEncoder.encode(userCreateForm.getPassword())); // 비밀번호 해시화
-        return userRepository.save(user); // DB에 저장
+        user.setPassword(passwordEncoder.encode(userCreateForm.getPassword()));
+        return userRepository.save(user);
     }
 
-
-
+    // 사용자 이름으로 사용자 찾기 메소드 추가
+    public SiteUser findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

@@ -19,7 +19,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/signup", "/user/login", "/post/list").permitAll() // 허용할 요청
+                        .requestMatchers("/user/signup", "/user/login", "/post/list","/post/{id}").permitAll() // 허용할 요청
                         .anyRequest().authenticated() // 인증 필요
                 );
 
