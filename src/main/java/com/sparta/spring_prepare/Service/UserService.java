@@ -1,31 +1,37 @@
 package com.sparta.spring_prepare.Service;
 
 import com.sparta.spring_prepare.Entity.SiteUser;
-import com.sparta.spring_prepare.Repository.UserRepository;
 import com.sparta.spring_prepare.dto.UserCreateForm;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.sparta.spring_prepare.Repository.SiteUserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final SiteUserRepository siteUserRepository;
+    private final PasswordEncoder passwordEncoder; // PasswordEncoder 주입
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    // 회원가입 메서드
+    public void register(UserCreateForm userCreateForm) {
+        // 비밀번호 해시 처리
+        String encodedPassword = passwordEncoder.encode(userCreateForm.getPassword());
 
-    // 회원가입 메소드
-    public SiteUser register(UserCreateForm userCreateForm) {
+        // SiteUser 객체 생성 및 저장
         SiteUser user = new SiteUser();
         user.setUsername(userCreateForm.getUsername());
-        user.setPassword(passwordEncoder.encode(userCreateForm.getPassword()));
-        return userRepository.save(user);
+        user.setPassword(encodedPassword);
+        user.setEmail(userCreateForm.getEmail());
+
+        siteUserRepository.save(user);
     }
 
-    // 사용자 이름으로 사용자 찾기 메소드 추가
-    public SiteUser findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    // 사용자 이름으로 사용자 검색
+    public Optional<SiteUser> findByUsername(String username) {
+        return siteUserRepository.findByUsername(username);
     }
 }

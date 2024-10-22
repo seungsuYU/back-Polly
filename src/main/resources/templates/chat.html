@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅 테스트</title>
+</head>
+<body>
+<h1>채팅방</h1>
+<div id="chatBox" style="border: 1px solid #ccc; width: 300px; height: 400px; overflow-y: scroll; padding: 10px;">
+    <div id="messages"></div>
+</div>
+<input type="text" id="messageInput" placeholder="메시지를 입력하세요" />
+<button id="sendButton">전송</button>
+
+<script>
+    const socket = new WebSocket('ws://localhost:8080/chat'); // WebSocket 서버 URL
+
+    // 메시지 수신 시 처리
+    socket.onmessage = function(event) {
+        const message = JSON.parse(event.data);
+        const messagesDiv = document.getElementById('messages');
+        messagesDiv.innerHTML += `<p><strong>${message.sender}:</strong> ${message.content}</p>`;
+        document.getElementById('chatBox').scrollTop = document.getElementById('chatBox').scrollHeight; // 자동 스크롤
+    };
+
+    // 전송 버튼 클릭 시 메시지 전송
+    document.getElementById('sendButton').onclick = function() {
+        const messageInput = document.getElementById('messageInput');
+        const messageContent = messageInput.value;
+
+        if (messageContent) {
+            const message = {
+                sender: "User", // 메시지를 보낸 사용자 이름
+                content: messageContent
+            };
+
+            socket.send(JSON.stringify(message)); // 메시지 전송
+            messageInput.value = ''; // 입력 필드 초기화
+        }
+    };
+</script>
+</body>
+</html>

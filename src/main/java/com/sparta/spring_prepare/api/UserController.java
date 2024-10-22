@@ -11,11 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +24,7 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
 
-    // 회원가입
     @PostMapping("/signup")
     public ResponseEntity<UserCreateForm> signup(@RequestBody UserCreateForm userCreateForm) {
         userService.register(userCreateForm);
@@ -39,9 +33,6 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println("입력된 사용자 이름: " + loginRequest.getUsername());
-        System.out.println("입력된 비밀번호: " + loginRequest.getPassword());
-
         try {
             // 사용자 인증
             authenticationManager.authenticate(
@@ -49,7 +40,8 @@ public class UserController {
             );
 
             // 사용자 정보 가져오기
-            SiteUser user = userService.findByUsername(loginRequest.getUsername());
+            SiteUser user = userService.findByUsername(loginRequest.getUsername())
+                    .orElseThrow(() -> new BadCredentialsException("사용자를 찾을 수 없습니다."));
 
             // JWT 토큰 생성
             final String token = jwtUtil.generateToken(user.getUsername());
@@ -67,4 +59,10 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<SiteUser> getUser(@PathVariable String username) {
+        return userService.findByUsername(username)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
 }

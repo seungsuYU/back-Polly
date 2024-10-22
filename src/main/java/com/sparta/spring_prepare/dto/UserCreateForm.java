@@ -26,4 +26,8 @@ public class UserCreateForm {
     @Email(message = "유효한 이메일 형식이 아닙니다.")
     private String email;
 
+    @NotEmpty(message = "닉네임은 필수항목입니다.")
+    private String nickname;
+
+
 }
