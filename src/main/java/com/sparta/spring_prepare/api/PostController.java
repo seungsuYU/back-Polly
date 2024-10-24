@@ -31,7 +31,7 @@ public class PostController {
         return postService.getAllPosts();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/list/{id}")
     public ResponseEntity<RequestPost> getPostById(@PathVariable Long id) {
         Optional<RequestPost> post = postService.getPostById(id);
         return post.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());

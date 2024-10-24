@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class PerformerUser {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

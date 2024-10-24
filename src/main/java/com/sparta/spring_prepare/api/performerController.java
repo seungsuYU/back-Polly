@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/performer")
+@CrossOrigin(origins = "http://localhost:3000")
 public class performerController {
 
 
@@ -22,13 +23,13 @@ public class performerController {
 
     @PostMapping("/create")
     public ResponseEntity<Performer> createperformer(@RequestBody Performer performer) {
-        Performer Performer = performerService.createperformer(performer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Performer);
+        Performer createdperformer = performerService.createperformer(performer);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdperformer);
     }
 
     @GetMapping("/list")
-    public List<Performer> getAllperformer() {
-        return performerService.getAllperformer();
+    public List<Performer> getAllperformers() {
+        return performerService.getAllperformers();
     }
 
     @GetMapping("/{id}")
@@ -38,8 +39,8 @@ public class performerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Performer> updateperformer(@PathVariable Long id, @RequestBody Performer updatedPost) {
-        Performer performer = performerService.updateperformer(id, updatedPost);
+    public ResponseEntity<Performer> updateperformer(@PathVariable Long id, @RequestBody Performer updatedperformer) {
+        Performer performer = performerService.updateperformer(id, updatedperformer);
         return ResponseEntity.ok(performer);
     }
 }

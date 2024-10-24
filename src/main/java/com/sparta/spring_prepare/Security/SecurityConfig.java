@@ -21,7 +21,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable()) // CSRF 비활성화
                 .cors(Customizer.withDefaults()) // CORS 활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/signup", "/user/login", "/post/list", "/post/{id}", "/myHandler").permitAll() // 허용할 요청
+                        .requestMatchers("/user/signup", "/user/login",
+                                                  "/post/list", "/post/{id}",
+                                                  "/performer/list", "/performer/{id}",
+                                                  "/myHandler").permitAll() // 허용할 요청
                         .anyRequest().authenticated() // 인증 필요
                 );
         return http.build();

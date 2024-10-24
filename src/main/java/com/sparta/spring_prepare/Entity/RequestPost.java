@@ -30,5 +30,6 @@ public class RequestPost {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private boolean result = false;
     // Getters and Setters
 }

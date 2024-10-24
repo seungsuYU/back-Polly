@@ -20,7 +20,7 @@ public class PerformerService {
         return performerRepository.save(performer);
     }
 
-    public List<Performer> getAllperformer() {
+    public List<Performer> getAllperformers() {
         return performerRepository.findAll();
     }
 
